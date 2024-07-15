@@ -1,26 +1,25 @@
 # HS-Chat-Beta
 
-!THIS CODE IS FOR A DISCORD BOT!
+# Discord Bot Setup Guide
 
-Required Installations:
+This guide provides instructions for setting up a Discord bot using Python and several libraries to interact with Discord's API and implement machine learning functionalities.
 
-Python: The bot is written in Python, so you’ll need Python 3.6 or higher.
-discord.py: This is a Python library for interacting with Discord’s API.
-transformers: This library by Hugging Face is used for the DialoGPT model.
-torch: Also known as PyTorch, this is used for machine learning and working with the DialoGPT model.
-asyncio: This is included in the Python standard library and is used for writing concurrent code.
-logging: This is also included in the Python standard library and is used for logging messages.
-json: Part of the Python standard library, used for working with JSON data.
-How to Run the Code:
+## Prerequisites
 
-Install Python: Download and install Python from the official website. Make sure to add Python to your system’s PATH.
-Install Dependencies: Open your command prompt or terminal and install the required libraries using pip:
-pip install discord.py
-pip install transformers
-pip install torch
+- **Python**: Version 3.6 or higher is required.
+- **discord.py**: A Python library for Discord's API.
+- **transformers**: Hugging Face library for the DialoGPT model.
+- **torch**: Known as PyTorch, used for machine learning.
+- **asyncio**: Included in Python's standard library for concurrent code.
+- **logging**: For logging messages, included in Python's standard library.
+- **json**: For working with JSON data, part of Python's standard library.
 
-Set Up Your Bot Token: Replace the placeholder token in client.run('your_token') with your actual Discord bot token. IF you are using replit use secrets os.getenv('SECRET_KEY')
-Run the Bot: Navigate to the directory containing your bot’s script and run it using Python:
-python main.py
+## Installation
 
-Keep the Bot Alive: If you’re using a keep_alive script to keep your bot running on a server, make sure it’s properly set up and called in your main script.
+1. **Install Python**:
+   Download Python from the official website. Ensure Python is added to your system's PATH.
+
+2. **Install Dependencies**:
+   Use pip to install the required libraries:
+   ```bash
+   pip install discord.py transformers torch
