@@ -1,5 +1,7 @@
 # HS-Chat-Beta
 
+!THIS CODE IS FOR A DISCORD BOT!
+
 Required Installations:
 
 Python: The bot is written in Python, so you’ll need Python 3.6 or higher.
