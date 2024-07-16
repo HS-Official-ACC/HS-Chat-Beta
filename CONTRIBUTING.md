@@ -71,7 +71,7 @@ Ensure all tests pass before submitting your pull request.
 
 ## Attribution
 
-By contributing to HS Chat Beta, you agree that your contributions will be licensed under the project's [license](link-to-license). This ensures that the project remains open-source and freely available for others to use and modify.
+By contributing to HS Chat Beta, you agree that your contributions will be licensed under the project's [license](https://github.com/HS-Official-ACC/HS-Chat-Beta/blob/main/license). This ensures that the project remains open-source and freely available for others to use and modify.
 
 ## Get in Touch
 
