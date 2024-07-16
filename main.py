@@ -8,7 +8,7 @@ import asyncio
 from datetime import datetime
 from keep_alive import keep_alive
 
-BOT_VERSION = "1.8"  # Bot version
+BOT_VERSION = "1.9"  # Updated bot version
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s:%(levelname)s:%(name)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
@@ -63,16 +63,16 @@ def respond_to_message(message, text):
         pad_token_id=tokenizer.eos_token_id,
         no_repeat_ngram_size=3,
         do_sample=True,
-        top_k=5000,
+        top_k=50,  # Adjusted top_k for better diversity
         top_p=0.95,
-        temperature=1,  # Increased temperature for more diverse responses
+        temperature=0.9,  # Adjusted temperature for more coherent responses
         attention_mask=attention_mask
     )
 
     response = tokenizer.decode(chat_histories[user_id][:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
     logging.info(f"Generated response: {response}")
 
-    if len(response.strip()) < 3 or response.lower() in ["no", "yes", "sure"]:
+    if len(response.strip()) < 3 or response.lower() in ["no", "yes", "sure", "oh ok!", "oh nooooo"]:
         response = "Can you please rephrase?"
         logging.info("Response was too short or unclear, using fallback response.")
 
@@ -155,7 +155,6 @@ async def setchannel_error(ctx, error):
         await ctx.send(f"An error occurred: {error}")
         logging.error(f"An error occurred in setchannel command: {error}")
 
-
 @client.event
 async def on_message(message):
     if message.author == client.user:
@@ -185,4 +184,3 @@ async def on_message(message):
 # Run the bot
 keep_alive()
 client.run('your-token')
-
