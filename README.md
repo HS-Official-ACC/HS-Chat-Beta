@@ -57,6 +57,51 @@ To become a beta tester or learn more about the development process, contact us 
 
 Thank you for your interest in HS-Chat-Beta, and we look forward to your contributions and feedback!
 
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.11] - 2024-07-18
+
+### Added
+- New `math` command to evaluate mathematical expressions.
+- Updated `help` command to include the new `math` command.
+
+### Changed
+- Improved logging for better traceability and debugging.
+- Adjusted bot response generation parameters for more coherent responses.
+- Enhanced the image generation feature with better error handling and logging.
+
+## [1.10] - 2024-07-14
+
+### Added
+- Initial implementation of image generation using Stable Diffusion API.
+- `generateimage` command to generate images based on user prompts.
+
+### Changed
+- Updated bot to respond in designated channels only.
+- Improved chat history management for better response generation.
+
+## [1.09] - 2024-07-10
+
+### Added
+- Support for setting and managing designated channels for bot interaction (`setchannel` and `setup` commands).
+- Custom `help` command to provide detailed usage instructions.
+
+### Changed
+- Optimized bot response generation by tweaking model parameters.
+- Improved error handling and logging for better debugging.
+
+## [1.08] - 2024-07-05
+
+### Added
+- Initial release of the Discord bot with basic chat capabilities using DialoGPT.
+- `servercount` command to display the number of servers the bot is in.
+
+### Changed
+- Basic command structure setup using discord.py.
+- Initial implementation of chat history management.
+
 # Version 1.9 Update Log
 
 ## Improvements and Enhancements
