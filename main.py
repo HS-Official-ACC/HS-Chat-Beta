@@ -7,8 +7,11 @@ import torch
 import asyncio
 from datetime import datetime
 from keep_alive import keep_alive
+import requests
+from PIL import Image
+from io import BytesIO
 
-BOT_VERSION = "1.9"  # Updated bot version
+BOT_VERSION = "1.12"  # Updated bot version
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s:%(levelname)s:%(name)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
@@ -18,6 +21,9 @@ intents.message_content = True
 
 client = commands.Bot(command_prefix='!', intents=intents)
 client.help_command = None
+
+with open('model_info.json', 'r') as file:
+    model_info = json.load(file)
 
 tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-large")
 model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-large")
@@ -78,6 +84,40 @@ def respond_to_message(message, text):
 
     return response
 
+# start img gen
+
+API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+
+headers = {
+    "Authorization": "Bearer your-token",  
+    "Content-Type": "application/json"
+}
+
+def generate_image(prompt):
+    data = json.dumps({
+        "inputs": prompt,
+        "parameters": {
+            "max_new_tokens": 50, 
+            "temperature": 0.7  
+        }
+    })
+
+    response = requests.request("POST", API_URL, headers=headers, data=data)
+
+    if response.status_code == 200:
+        try:
+            image_bytes = response.content
+            image = Image.open(BytesIO(image_bytes))
+            return image
+        except Exception as e:
+            logging.error(f"Error saving image: {str(e)}")
+            return None
+    else:
+        logging.error(f"Request failed with status code {response.status_code}, {response.text}")
+        return None
+
+# end img gen
+
 @client.command()
 async def servercount(ctx):
     num_servers = len(client.guilds)
@@ -100,6 +140,8 @@ async def help(ctx):
     embed.add_field(name="!setchannel", value="Sets a designated channel for the bot to respond to messages.", inline=False)
     embed.add_field(name="!setup", value="Automatically sets the current channel as the designated channel.", inline=False)
     embed.add_field(name="!help", value="Displays this help message.", inline=False)
+    embed.add_field(name="!generateimage <prompt>", value="Generates an image based on the provided prompt.", inline=False)
+    embed.add_field(name="!math <expression>", value="Evaluates a mathematical expression and returns the result.", inline=False)
     embed.add_field(name="Operating the Bot", value="Mention the bot or reply to its messages to interact with it.", inline=False)
     embed.set_footer(text="Bot created using Discord.py and GPT-2. Enjoy chatting!")
     await ctx.send(embed=embed)
@@ -180,6 +222,32 @@ async def on_message(message):
                     await message.channel.send(f"{message.author.mention}", embed=embed)
             logging.info(f"Sent response to user {message.author.id}: {response}")
     await client.process_commands(message)
+
+@client.command()
+async def generateimage(ctx, *, prompt: str):
+    logging.info(f"Generate image command used with prompt: {prompt}")
+    async with ctx.typing():
+        image = generate_image(prompt)
+        if image:
+            with BytesIO() as image_binary:
+                image.save(image_binary, 'PNG')
+                image_binary.seek(0)
+                await ctx.send(file=discord.File(fp=image_binary, filename='image.png'))
+            logging.info("Image generated and sent successfully.")
+        else:
+            await ctx.send("Failed to generate the image.")
+            logging.error("Image generation failed.")
+
+@client.command()
+async def math(ctx, *, expression: str):
+    logging.info(f"Math command used with expression: {expression}")
+    try:
+        result = eval(expression)
+        await ctx.send(f"The result of `{expression}` is `{result}`.")
+        logging.info(f"Math expression evaluated successfully: {expression} = {result}")
+    except Exception as e:
+        await ctx.send(f"Failed to evaluate the expression `{expression}`. Error: {e}")
+        logging.error(f"Error evaluating math expression: {expression}. Error: {e}")
 
 # Run the bot
 keep_alive()
