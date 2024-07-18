@@ -1,44 +1,43 @@
-# HS-Chat-Beta
-
-# Discord Bot Setup Instructions
-
-## Required Installations
-
-Before you begin, ensure you have the following installed:
-
-- **Python**: The bot is written in Python. You'll need Python 3.6 or higher.
-- **discord.py**: A Python library for interacting with Discord's API.
-- **transformers**: This library by Hugging Face is used for the DialoGPT model.
-- **torch**: Also known as PyTorch, this is used for machine learning and working with the DialoGPT model.
-- **asyncio**: Included in the Python standard library, used for writing concurrent code.
-- **logging**: Also included in the Python standard library, used for logging messages.
-- **json**: Part of the Python standard library, used for working with JSON data.
-
-## How to Run the Code
+## How to Run the Bot
 
 1. **Install Python**:
-   Download and install Python from the official website. Make sure to add Python to your system's PATH.
+   - Download and install Python from the official website. Make sure to add Python to your system's PATH.
 
 2. **Install Dependencies**:
-   Open your command prompt or terminal and install the required libraries using pip:
-   ```bash
-   pip install discord.py
-   pip install transformers
-   pip install torch
-   ```
-## Set Up Your Bot Token
+   - Open your command prompt or terminal and install the required libraries using pip:
+     ```bash
+     pip install discord.py
+     pip install transformers
+     pip install torch
+     pip install requests
+     pip install pillow
+     ```
 
-Replace the placeholder token in the `client.run('your_token')` line with your actual Discord bot token.
+3. **Set Up Your Bot Token**:
+   - Replace the placeholder token in the `client.run('your_token')` line with your actual Discord bot token. 
+   - For Replit users:
+     ```python
+     client.run(os.getenv('SECRET_KEY'))
+     ```
 
-- **For Replit users:**
-    ```python
-    client.run(os.getenv('SECRET_KEY'))
-    ```
+4. **Set Up Your Hugging Face API Key**:
+   - Replace the placeholder in the `headers` dictionary with your actual Hugging Face API key:
+     ```python
+     headers = {
+         "Authorization": "Bearer your_hugging_face_api_key",  # Replace with your Hugging Face API key
+         "Content-Type": "application/json"
+     }
+     ```
 
-- **Run Your File**
-    ```bash
-    python main.py
-    ```
+5. **Run Your Bot**:
+   - Save your script as `main.py` and run it using:
+     ```bash
+     python main.py
+     ```
+
+6. **Verify Operation**:
+   - Ensure that the bot is running correctly by checking the console for any errors and confirming that it is online in your Discord server.
+
 
 ## Development and Contribution
 
